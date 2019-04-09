@@ -30,7 +30,7 @@
 /*
  * Define if you have a Mac. No, wrong. Define if you are compiling on a Mac.
 */
-#define __mac__
+//#define __mac__
 
 /***************************************************************************
  * The following options are run-time configurable. However, you can
@@ -62,7 +62,7 @@
  * XF86Config file. I won't pay your broken monitor, though.)
  * The run-time option is "-d" to enable correct-aspect drawing.
 */
-#define DEFAULT_WANT_ASPECT
+//#define DEFAULT_WANT_ASPECT
 
 /*
  * It is not necessary to select one of these: UAE will figure this out
@@ -83,6 +83,7 @@
  * "make svga" instead of "make linux".
 #define LINUX_SVGALIB
  */
+#define LINUX_SVGALIB
 
 /*
  * If you have defined LINUX_SVGALIB, select either SVGALIB_16BIT_SCREEN 
@@ -92,8 +93,10 @@
  * You may have to change the ?_WEIGHT defines if you
  * use a 16 bit screen.
 #define SVGALIB_8BIT_SCREEN
- */
 #define SVGALIB_16BIT_SCREEN
+ */
+#define SVGALIB_8BIT_SCREEN
+
 #define SVGALIB_R_WEIGHT 5
 #define SVGALIB_G_WEIGHT 6
 #define SVGALIB_B_WEIGHT 5
@@ -129,7 +132,7 @@
  * If you leave this commented in, memory accesses will be faster,
  * but some programs may fail for an obscure reason.
  */
-#define NO_EXCEPTION_3
+//#define NO_EXCEPTION_3
 
 /*
  * If you use Kickstart 1.3, you had better define the following.

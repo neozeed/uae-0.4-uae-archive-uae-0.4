@@ -130,7 +130,8 @@ static void writedir(directory *dir)
     directory *subdir;
     afile *f;
     
-    if (mkdir (dir->name, 0777) < 0 && errno != EEXIST) {	
+    //if (mkdir (dir->name, 0777) < 0 && errno != EEXIST) {	
+    if (mkdir (dir->name) < 0 && errno != EEXIST) {	
 	fprintf(stderr, "Could not create directory \"%s\". Giving up.\n", dir->name);
 	exit (20);	
     }

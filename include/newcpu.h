@@ -12,10 +12,10 @@
 
 extern bool broken_in;
 
-typedef void cpuop_func(UWORD) REGPARAM;
+typedef void cpuop_func(UWORD);
 
 extern cpuop_func *cpufunctbl[65536];
-extern void op_illg(UWORD) REGPARAM;
+extern void op_illg(UWORD);
 
 typedef char flagtype; 
 

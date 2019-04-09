@@ -51,20 +51,28 @@ drive floppy[4];
 static void drive_insert(drive *drv, char *fname)
 {
     unsigned char buffer[10];
+
+	printf("drive_insert opening %s ", fname);
     
     drv->diskfile = fopen(fname,"r+b");
     if (drv->diskfile) {
 	drv->wrprot = false;
+	printf("write enabled/");
     } else {
+	printf("write disabled/");
 	drv->wrprot = true;
 	drv->diskfile = fopen(fname, "rb");
-	if (!drv->diskfile) return;
+	if (!drv->diskfile) {
+		printf("NONE\n");
+		return;
+		}
     }
     fread(buffer,sizeof(char),8,drv->diskfile);
     if (strncmp((char *)buffer,"UAE--ADF",8) == 0) {	
 	int offs = 160*4+8;
 	int i;
 	
+	printf("ADF_EXT1\n");
     	drv->filetype = ADF_EXT1;
 	drv->wrprot = true; /* write to adf_ext1 not implemented */
 	for(i=0; i<160; i++) {
@@ -76,6 +84,7 @@ static void drive_insert(drive *drv, char *fname)
 	}
     } else {
 	int i;
+	printf("ADF_NORMAL\n");
     	drv->filetype = ADF_NORMAL;
 	for(i=0; i<160; i++) {
 	    drv->trackdata[i].len = 512 * 11;

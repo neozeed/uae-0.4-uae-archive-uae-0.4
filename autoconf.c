@@ -32,13 +32,13 @@ ULONG explibname;
 
 static UWORD rtarea[32768];
 
-static ULONG rtarea_lget(CPTR) REGPARAM;
-static UWORD rtarea_wget(CPTR) REGPARAM;
-static UBYTE rtarea_bget(CPTR) REGPARAM;
-static void  rtarea_lput(CPTR, ULONG) REGPARAM;
-static void  rtarea_wput(CPTR, UWORD) REGPARAM;
-static void  rtarea_bput(CPTR, UBYTE) REGPARAM;
-static UWORD *rtarea_xlate(CPTR) REGPARAM;
+static ULONG rtarea_lget(CPTR);
+static UWORD rtarea_wget(CPTR);
+static UBYTE rtarea_bget(CPTR);
+static void  rtarea_lput(CPTR, ULONG);
+static void  rtarea_wput(CPTR, UWORD);
+static void  rtarea_bput(CPTR, UBYTE);
+static UWORD *rtarea_xlate(CPTR);
 
 addrbank rtarea_bank = {
     rtarea_lget, rtarea_wget, rtarea_bget,

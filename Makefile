@@ -20,7 +20,7 @@ RELEASE=yes
 INCLUDES=-Iinclude
 
 OBJS = main.o newcpu.o memory.o debug.o custom.o cia.o disk.o $(GFXOBJS) \
-       autoconf.o os.o ersatz.o filesys.o hardfile.o keybuf.o \
+       autoconf.o os.o ersatz.o hardfile.o keybuf.o \
        cpu0.o cpu1.o cpu2.o cpu3.o cpu4.o cpu5.o cpu6.o cpu7.o \
        cpu8.o cpu9.o cpuA.o cpuB.o cpuC.o cpuD.o cpuE.o cpuF.o cputbl.o
        
@@ -33,11 +33,23 @@ all:
 	@echo "make svga -- Linux svgalib"
 	@echo "make hpux -- Try to use HP-SUX compiler. Use GCC if it's available."
 	@echo "make osf -- DEC ALPHA with OSF/1"
+	@echo "make sdl -- SDL (mingw32)"
+
+sdl:
+	$(MAKE) INCDIRS='' \
+		CC='gcc' \
+		GFXLDFLAGS='-lmingw32 -lSDLmain -lSDL -liconv -lm -luser32 -lgdi32 -lwinmm -ldxguid' \
+		GFXOBJS=sdl.o \
+		CFLAGS='-O2 -funroll-loops' \
+		progs
+
 
 generic:
-	$(MAKE) INCDIRS='-I/usr/include/X11' \
-		GFXLDFLAGS='-L/usr/X11/lib -lX11 -lXext' \
-		GFXOBJS=xwin.o \
+	$(MAKE) INCDIRS= \
+		CC='gcc' \
+		GFXLDFLAGS= \
+		GFXOBJS=null.o \
+		CFLAGS='' \
 		progs
 
 withgcc:
@@ -90,69 +102,71 @@ svga:
 		-O3 -fomit-frame-pointer $(PENTIUMOPT)' \
 		progs
 
-progs: uae readdisk
+progs: uae.exe readdisk.exe
 
 install:
 
-readdisk: readdisk.o
+readdisk.exe: readdisk.o
 	$(CC) readdisk.o -o readdisk $(LDFLAGS) $(DEBUGFLAGS)
 
-uae: $(OBJS)
-	$(CC) $(OBJS) -o uae $(GFXLDFLAGS) $(LDFLAGS) $(DEBUGFLAGS)
+uae.exe: $(OBJS)
+	$(CC) $(OBJS) -o uae.exe $(GFXLDFLAGS) $(LDFLAGS) $(DEBUGFLAGS)
 
 clean:
-	-rm -f *.o uae readdisk
-	-rm -f gencpu genblitter
+	-rm -f *.o 
+	-rm -f uae.exe
+	-rm -f readdisk.exe
+	-rm -f gencpu.exe genblitter.exe
 	-rm -f cpu?.c blit.h
 	-rm -f cputbl.h cputbl.c
 
-blit.h: genblitter
-	genblitter >blit.h
+blit.h: genblitter.exe
+	./genblitter.exe >blit.h
 
-genblitter: genblitter.o
+genblitter.exe: genblitter.o
 	$(CC) -o $@ $?
-gencpu: gencpu.o
+gencpu.exe: gencpu.o
 	$(CC) -o $@ $?
 
 custom.o: blit.h
 
-cputbl.c: gencpu
-	gencpu t >cputbl.c
-cputbl.h: gencpu
-	gencpu h >cputbl.h
+cputbl.c: gencpu.exe
+	./gencpu t >cputbl.c
+cputbl.h: gencpu.exe
+	./gencpu h >cputbl.h
 
-cpu0.c: gencpu
-	gencpu f 0 >cpu0.c
-cpu1.c: gencpu
-	gencpu f 1 >cpu1.c
-cpu2.c: gencpu
-	gencpu f 2 >cpu2.c
-cpu3.c: gencpu
-	gencpu f 3 >cpu3.c
-cpu4.c: gencpu
-	gencpu f 4 >cpu4.c
-cpu5.c: gencpu
-	gencpu f 5 >cpu5.c
-cpu6.c: gencpu
-	gencpu f 6 >cpu6.c
-cpu7.c: gencpu
-	gencpu f 7 >cpu7.c
-cpu8.c: gencpu
-	gencpu f 8 >cpu8.c
-cpu9.c: gencpu
-	gencpu f 9 >cpu9.c
-cpuA.c: gencpu
-	gencpu f 10 >cpuA.c
-cpuB.c: gencpu
-	gencpu f 11 >cpuB.c
-cpuC.c: gencpu
-	gencpu f 12 >cpuC.c
-cpuD.c: gencpu
-	gencpu f 13 >cpuD.c
-cpuE.c: gencpu
-	gencpu f 14 >cpuE.c
-cpuF.c: gencpu
-	gencpu f 15 >cpuF.c
+cpu0.c: gencpu.exe
+	./gencpu f 0 >cpu0.c
+cpu1.c: gencpu.exe
+	./gencpu f 1 >cpu1.c
+cpu2.c: gencpu.exe
+	./gencpu f 2 >cpu2.c
+cpu3.c: gencpu.exe
+	./gencpu f 3 >cpu3.c
+cpu4.c: gencpu.exe
+	./gencpu f 4 >cpu4.c
+cpu5.c: gencpu.exe
+	./gencpu f 5 >cpu5.c
+cpu6.c: gencpu.exe
+	./gencpu f 6 >cpu6.c
+cpu7.c: gencpu.exe
+	./gencpu f 7 >cpu7.c
+cpu8.c: gencpu.exe
+	./gencpu f 8 >cpu8.c
+cpu9.c: gencpu.exe
+	./gencpu f 9 >cpu9.c
+cpuA.c: gencpu.exe
+	./gencpu f 10 >cpuA.c
+cpuB.c: gencpu.exe
+	./gencpu f 11 >cpuB.c
+cpuC.c: gencpu.exe
+	./gencpu f 12 >cpuC.c
+cpuD.c: gencpu.exe
+	./gencpu f 13 >cpuD.c
+cpuE.c: gencpu.exe
+	./gencpu f 14 >cpuE.c
+cpuF.c: gencpu.exe
+	./gencpu f 15 >cpuF.c
 
 # Compiling these without debugging info speeds up the compilation
 # if you have limited RAM (<= 8M)
@@ -219,6 +233,7 @@ cia.o: config.h
 custom.o: config.h
 newcpu.o: config.h
 autoconf.o: config.h
+null.o: config.h
 xwin.o: config.h
 svga.o: config.h
 os.o: config.h

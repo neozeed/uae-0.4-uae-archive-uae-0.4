@@ -10,15 +10,20 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#ifdef __unix
+//#ifdef __unix
 #include <unistd.h>
 #include <fcntl.h>
-#endif
+//#endif
 
 #include "config.h"
 
+#undef __mac__
 #ifdef __mac__
 #include <unix.h>
+#endif
+#ifdef __MINGW32__
+#include <unistd.h>
+#include <fcntl.h>
 #endif
 
 #include "amiga.h"

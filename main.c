@@ -33,11 +33,11 @@ bool automount_uaedev = true;
 bool produce_sound = true;
 KbdLang keyboard_lang = DEFAULT_KBD_LANG;
 
-#ifdef __unix
+#if 1	//__unix
 
 static bool mount_seen = false;
 
-static void parse_cmdline(int argc, char **argv)
+void parse_cmdline(int argc, char **argv)
 {
     int c;
     extern char *optarg;
@@ -62,7 +62,8 @@ static void parse_cmdline(int argc, char **argv)
 		s2 = strchr(buf, ':');
 		if(s2) {
 		    *s2++ = '\0';
-		    add_filesys_unit(buf, s2, readonly);
+			printf("add_filesys_unit needs to be ported.. sorry\n");
+		    //add_filesys_unit(buf, s2, readonly);
 		} else {
 		    fprintf(stderr, "Usage: [-m | -M] VOLNAME:/mount_point\n");
 		}

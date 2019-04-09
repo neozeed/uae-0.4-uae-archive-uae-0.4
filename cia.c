@@ -527,12 +527,12 @@ void dumpcia(void)
 
 /* CIA memory access */
 
-static ULONG cia_lget(CPTR) REGPARAM;
-static UWORD cia_wget(CPTR) REGPARAM;
-static UBYTE cia_bget(CPTR) REGPARAM;
-static void  cia_lput(CPTR, ULONG) REGPARAM;
-static void  cia_wput(CPTR, UWORD) REGPARAM;
-static void  cia_bput(CPTR, UBYTE) REGPARAM;
+static ULONG cia_lget(CPTR);
+static UWORD cia_wget(CPTR);
+static UBYTE cia_bget(CPTR);
+static void  cia_lput(CPTR, ULONG);
+static void  cia_wput(CPTR, UWORD);
+static void  cia_bput(CPTR, UBYTE);
 
 addrbank cia_bank = {
     cia_lget, cia_wget, cia_bget,
@@ -585,12 +585,12 @@ void cia_bput(CPTR addr, UBYTE value)
 
 /* battclock memory access */
 
-static ULONG clock_lget(CPTR) REGPARAM;
-static UWORD clock_wget(CPTR) REGPARAM;
-static UBYTE clock_bget(CPTR) REGPARAM;
-static void  clock_lput(CPTR, ULONG) REGPARAM;
-static void  clock_wput(CPTR, UWORD) REGPARAM;
-static void  clock_bput(CPTR, UBYTE) REGPARAM;
+static ULONG clock_lget(CPTR);
+static UWORD clock_wget(CPTR);
+static UBYTE clock_bget(CPTR);
+static void  clock_lput(CPTR, ULONG);
+static void  clock_wput(CPTR, UWORD);
+static void  clock_bput(CPTR, UBYTE);
 
 addrbank clock_bank = {
     clock_lget, clock_wget, clock_bget,

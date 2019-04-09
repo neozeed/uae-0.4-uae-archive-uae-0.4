@@ -139,6 +139,11 @@ void debug(void)
 	    MC68000_step(); 
 	    MC68000_dumpstate(&nextpc); 
 	    break;
+	 case 'j':
+		for(;;){ 
+	    MC68000_step(); 
+	    MC68000_dumpstate(&nextpc); }
+	    break;
 	 case 'z': 
 	    MC68000_skip(nextpc);
 	    MC68000_dumpstate(&nextpc);

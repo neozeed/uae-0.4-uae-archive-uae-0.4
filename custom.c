@@ -549,12 +549,12 @@ static void AUD3LEN(UWORD v) { audlen[3] = v; }
 
 /* Custom chip memory bank */
 
-static ULONG custom_lget(CPTR) REGPARAM;
-static UWORD custom_wget(CPTR) REGPARAM;
-static UBYTE custom_bget(CPTR) REGPARAM;
-static void  custom_lput(CPTR, ULONG) REGPARAM;
-static void  custom_wput(CPTR, UWORD) REGPARAM;
-static void  custom_bput(CPTR, UBYTE) REGPARAM;
+static ULONG custom_lget(CPTR);
+static UWORD custom_wget(CPTR);
+static UBYTE custom_bget(CPTR);
+static void  custom_lput(CPTR, ULONG);
+static void  custom_wput(CPTR, UWORD);
+static void  custom_bput(CPTR, UBYTE);
 
 addrbank custom_bank = {
     custom_lget, custom_wget, custom_bget,

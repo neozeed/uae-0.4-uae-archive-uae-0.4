@@ -24,14 +24,14 @@ extern int memlogptr;
 #define bogomem_start 0xC00000 
 #define kickmem_start 0xF80000
 
-typedef ULONG (*lget_func)(CPTR) REGPARAM;
-typedef UWORD (*wget_func)(CPTR) REGPARAM;
-typedef UBYTE (*bget_func)(CPTR) REGPARAM;
-typedef void (*lput_func)(CPTR,ULONG) REGPARAM;
-typedef void (*wput_func)(CPTR,UWORD) REGPARAM;
-typedef void (*bput_func)(CPTR,UBYTE) REGPARAM;
-typedef UWORD *(*xlate_func)(CPTR) REGPARAM;
-typedef bool (*check_func)(CPTR, ULONG) REGPARAM;
+typedef ULONG (*lget_func)(CPTR);
+typedef UWORD (*wget_func)(CPTR);
+typedef UBYTE (*bget_func)(CPTR);
+typedef void (*lput_func)(CPTR,ULONG);
+typedef void (*wput_func)(CPTR,UWORD);
+typedef void (*bput_func)(CPTR,UBYTE);
+typedef UWORD *(*xlate_func)(CPTR);
+typedef bool (*check_func)(CPTR, ULONG);
 
 typedef struct {
     lget_func lget;
@@ -55,8 +55,8 @@ extern void rtarea_init (void);
 
 /* Default memory access functions */
 
-extern bool default_check(CPTR addr, ULONG size) REGPARAM;
-extern UWORD *default_xlate(CPTR addr) REGPARAM;
+extern bool default_check(CPTR addr, ULONG size);
+extern UWORD *default_xlate(CPTR addr);
 
 extern lget_func do_lget[256];
 extern wget_func do_wget[256];

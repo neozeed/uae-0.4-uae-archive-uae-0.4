@@ -47,14 +47,14 @@ UWORD *default_xlate(CPTR a)
 
 static UWORD chipmemory[chipmem_size/2];
 
-static ULONG chipmem_lget(CPTR) REGPARAM;
-static UWORD chipmem_wget(CPTR) REGPARAM;
-static UBYTE chipmem_bget(CPTR) REGPARAM;
-static void  chipmem_lput(CPTR, ULONG) REGPARAM;
-static void  chipmem_wput(CPTR, UWORD) REGPARAM;
-static void  chipmem_bput(CPTR, UBYTE) REGPARAM;
-static bool  chipmem_check(CPTR addr, ULONG size) REGPARAM;
-static UWORD *chipmem_xlate(CPTR addr) REGPARAM;
+static ULONG chipmem_lget(CPTR);
+static UWORD chipmem_wget(CPTR);
+static UBYTE chipmem_bget(CPTR);
+static void  chipmem_lput(CPTR, ULONG);
+static void  chipmem_wput(CPTR, UWORD);
+static void  chipmem_bput(CPTR, UBYTE);
+static bool  chipmem_check(CPTR addr, ULONG size);
+static UWORD *chipmem_xlate(CPTR addr);
 
 ULONG chipmem_lget(CPTR addr)
 {
@@ -121,14 +121,14 @@ UWORD *chipmem_xlate(CPTR addr)
 
 static UWORD bogomemory[bogomem_size/2];
 
-static ULONG bogomem_lget(CPTR) REGPARAM;
-static UWORD bogomem_wget(CPTR) REGPARAM;
-static UBYTE bogomem_bget(CPTR) REGPARAM;
-static void  bogomem_lput(CPTR, ULONG) REGPARAM;
-static void  bogomem_wput(CPTR, UWORD) REGPARAM;
-static void  bogomem_bput(CPTR, UBYTE) REGPARAM;
-static bool  bogomem_check(CPTR addr, ULONG size) REGPARAM;
-static UWORD *bogomem_xlate(CPTR addr) REGPARAM;
+static ULONG bogomem_lget(CPTR);
+static UWORD bogomem_wget(CPTR);
+static UBYTE bogomem_bget(CPTR);
+static void  bogomem_lput(CPTR, ULONG);
+static void  bogomem_wput(CPTR, UWORD);
+static void  bogomem_bput(CPTR, UBYTE);
+static bool  bogomem_check(CPTR addr, ULONG size);
+static UWORD *bogomem_xlate(CPTR addr);
 
 ULONG bogomem_lget(CPTR addr)
 {
@@ -195,14 +195,14 @@ UWORD *bogomem_xlate(CPTR addr)
 
 static UWORD kickmemory[kickmem_size/2];
 
-static ULONG kickmem_lget(CPTR) REGPARAM;
-static UWORD kickmem_wget(CPTR) REGPARAM;
-static UBYTE kickmem_bget(CPTR) REGPARAM;
-static void  kickmem_lput(CPTR, ULONG) REGPARAM;
-static void  kickmem_wput(CPTR, UWORD) REGPARAM;
-static void  kickmem_bput(CPTR, UBYTE) REGPARAM;
-static bool  kickmem_check(CPTR addr, ULONG size) REGPARAM;
-static UWORD *kickmem_xlate(CPTR addr) REGPARAM;
+static ULONG kickmem_lget(CPTR);
+static UWORD kickmem_wget(CPTR);
+static UBYTE kickmem_bget(CPTR);
+static void  kickmem_lput(CPTR, ULONG);
+static void  kickmem_wput(CPTR, UWORD);
+static void  kickmem_bput(CPTR, UBYTE);
+static bool  kickmem_check(CPTR addr, ULONG size);
+static UWORD *kickmem_xlate(CPTR addr);
 
 ULONG kickmem_lget(CPTR addr)
 {

@@ -2260,7 +2260,8 @@ static void generate_header(void)
     
     mismatch = 0;
     
-    printf("extern void op_illg(UWORD) REGPARAM;\n");
+//    printf("extern void op_illg(UWORD) REGPARAM;\n");
+    printf("extern void op_illg(UWORD);\n");
     
     for(opcode=0; opcode < 65536; opcode++) {
 	if (table[opcode].mnemo == i_ILLG) {
