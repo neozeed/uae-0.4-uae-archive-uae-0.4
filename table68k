@@ -1,0 +1,164 @@
+% 0: bit 0
+% 1: bit 1
+% c: condition code
+% C: condition codes, except F
+% f: direction
+% i: immediate
+% I: immediate, except 0
+% j: immediate 1..8
+% J: immediate 0..15
+% s: source mode
+% S: source reg
+% d: dest mode
+% D: dest reg
+% r: reg
+% z: size
+%
+% Actually, a sssSSS may appear as a destination, and
+% vice versa. The only difference between sssSSS and
+% dddDDD are the valid addressing modes. There is
+% no match for immediate and pc-rel. addressing modes
+% in case of dddDDD.
+%
+% Arp: --> -(Ar)
+% ArP: --> (Ar)+
+
+0000 0000 0011 1100: ORSR.B  #1
+0000 0000 0111 1100: ORSR.W  #1
+0000 0000 zzdd dDDD: OR.z    #z,d[!Areg]
+0000 0010 0011 1100: ANDSR.B #1
+0000 0010 0111 1100: ANDSR.W #1
+0000 0010 zzdd dDDD: AND.z   #z,d[!Areg]
+0000 0100 zzdd dDDD: SUB.z   #z,d[!Areg]
+0000 0110 zzdd dDDD: ADD.z   #z,d[!Areg]
+0000 1000 00ss sSSS: BTST    #1,s[!Areg,Immd]
+0000 1000 01ss sSSS: BCHG    #1,s[!Areg,Immd]
+0000 1000 10ss sSSS: BCLR    #1,s[!Areg,Immd]
+0000 1000 11ss sSSS: BSET    #1,s[!Areg,Immd]
+0000 1010 0011 1100: EORSR.B #1
+0000 1010 0111 1100: EORSR.W #1
+0000 1010 zzdd dDDD: EOR.z   #z,d[!Areg]
+0000 1100 zzdd dDDD: CMP.z   #z,d[!Areg]
+
+%0000 1110 zzdd dDDD MOVES
+
+
+% A64 uses these... weird.
+%0000 rrr1 00dd dDDD: MOVEP.W d[Areg-Ad16],Dr
+%0000 rrr1 01dd dDDD: MOVEP.L d[Areg-Ad16],Dr
+%0000 rrr1 10dd dDDD: MOVEP.W Dr,d[Areg-Ad16]
+%0000 rrr1 11dd dDDD: MOVEP.L Dr,d[Areg-Ad16]
+0000 rrr1 00dd dDDD: BTST    Dr,d[!Areg]
+0000 rrr1 01dd dDDD: BCHG    Dr,d[!Areg]
+0000 rrr1 10dd dDDD: BCLR    Dr,d[!Areg]
+0000 rrr1 11dd dDDD: BSET    Dr,d[!Areg]
+
+0001 DDDd ddss sSSS: MOVE.B  s,d[!Areg]
+0010 DDDd ddss sSSS: MOVEA.L s,d[Areg]
+0010 DDDd ddss sSSS: MOVE.L  s,d[!Areg]
+0011 DDDd ddss sSSS: MOVEA.W s,d[Areg]
+0011 DDDd ddss sSSS: MOVE.W  s,d[!Areg]
+		   
+0100 0000 zzdd dDDD: NEGX.z  d[!Areg]
+0100 0000 11dd dDDD: MVSR2.W d[!Areg]
+0100 0010 zzdd dDDD: CLR.z   d[!Areg]
+0100 0010 11dd dDDD: MVSR2.B d[!Areg]
+0100 0100 zzdd dDDD: NEG.z   d[!Areg]
+0100 0100 11ss sSSS: MV2SR.B s[!Areg]
+0100 0110 zzdd dDDD: NOT.z   d[!Areg]
+0100 0110 11ss sSSS: MV2SR.W s[!Areg]
+0100 1000 00dd dDDD: NBCD.B  d[!Areg]
+0100 1000 01ss sSSS: SWAP.L  s[Dreg]         
+0100 1000 01ss sSSS: PEA.L   s[!Dreg,Areg,Immd]
+0100 1000 10dd dDDD: EXT.W   d[Dreg]         
+0100 1000 10dd dDDD: MVMLE.W d[!Dreg,Areg]
+0100 1000 11dd dDDD: EXT.L   d[Dreg]         
+0100 1000 11dd dDDD: MVMLE.L d[!Dreg,Areg]
+0100 1010 zzdd dDDD: TST.z   d
+%0100 1010 11dd dDDD: TAS
+0100 1100 10ss sSSS: MVMEL.W s[!Dreg,Areg,Immd]
+0100 1100 11ss sSSS: MVMEL.L s[!Dreg,Areg,Immd]
+0100 1110 0100 JJJJ: TRAP    #J
+0100 1110 0101 0rrr: LINK.L  Ar,#1
+0100 1110 0101 1rrr: UNLK.L  Ar
+0100 1110 0110 0rrr: MVR2USP.L Ar
+0100 1110 0110 1rrr: MVUSP2R.L Ar
+0100 1110 0111 0000: RESET
+0100 1110 0111 0001: NOP
+0100 1110 0111 0010: STOP    #1
+0100 1110 0111 0011: RTE
+0100 1110 0111 0100: RTD     #1
+0100 1110 0111 0101: RTS
+0100 1110 0111 0110: TRAPV
+0100 1110 0111 0111: RTR
+0100 1110 10ss sSSS: JSR.L   s[!Dreg,Areg,Immd]
+0100 1110 11ss sSSS: JMP.L   s[!Dreg,Areg,Immd]
+0100 rrr1 11ss sSSS: LEA.L   s[!Dreg,Areg,Immd],Ar
+
+0101 jjj0 zzdd dDDD: ADDA.z  #j,d[Areg]      
+0101 jjj0 zzdd dDDD: ADD.z   #j,d[!Areg]
+0101 jjj1 zzdd dDDD: SUBA.z  #j,d[Areg]      
+0101 jjj1 zzdd dDDD: SUB.z   #j,d[!Areg]
+0101 cccc 1100 1rrr: DBcc.W  Dr,#1
+0101 cccc 11dd dDDD: Scc.B   d[!Areg]
+
+0110 0001 0000 0000: BSR.W   #1
+0110 0001 IIII IIII: BSR.B   #i
+0110 CCCC 0000 0000: Bcc.W   #1
+0110 CCCC IIII IIII: Bcc.B   #i
+
+0111 rrr0 iiii iiii: MOVE.L  #i,Dr
+
+1000 rrr0 zzss sSSS: OR.z    s[!Areg],Dr
+1000 rrr0 11ss sSSS: DIVU.W  s[!Areg],Dr
+1000 rrr1 00dd dDDD: SBCD.B  d[Dreg],Dr      
+1000 rrr1 00dd dDDD: SBCD.B  d[Areg-Apdi],Arp      
+1000 rrr1 00dd dDDD: OR.B    Dr,d[!Areg,Dreg]
+1000 rrr1 01dd dDDD: OR.W    Dr,d[!Areg,Dreg]
+1000 rrr1 10dd dDDD: OR.L    Dr,d[!Areg,Dreg]
+1000 rrr1 11ss sSSS: DIVS.W  s[!Areg],Dr
+
+1001 rrr0 zzss sSSS: SUB.z   s,Dr
+1001 rrr0 11ss sSSS: SUBA.W  s,Ar
+1001 rrr1 zzdd dDDD: SUBX.z  d[Dreg],Dr      
+1001 rrr1 zzdd dDDD: SUBX.z  d[Areg-Apdi],Arp      
+1001 rrr1 zzdd dDDD: SUB.z   Dr,d[!Areg,Dreg]
+1001 rrr1 11ss sSSS: SUBA.L  s,Ar
+
+1011 rrr0 zzss sSSS: CMP.z   s,Dr
+1011 rrr0 11ss sSSS: CMPA.W  s,Ar
+1011 rrr1 11ss sSSS: CMPA.L  s,Ar
+1011 rrr1 zzdd dDDD: CMPM.z  d[Areg-Aipi],ArP
+1011 rrr1 zzdd dDDD: EOR.z   Dr,d[!Areg]
+
+1100 rrr0 zzss sSSS: AND.z   s[!Areg],Dr
+1100 rrr0 11ss sSSS: MULU.W  s[!Areg],Dr
+1100 rrr1 00dd dDDD: ABCD.B  d[Dreg],Dr      
+1100 rrr1 00dd dDDD: ABCD.B  d[Areg-Apdi],Arp      
+1100 rrr1 00dd dDDD: AND.B   Dr,d[!Areg,Dreg]
+1100 rrr1 01dd dDDD: EXG.L   Dr,d[Dreg]      
+1100 rrr1 01dd dDDD: EXG.L   Ar,d[Areg]            
+1100 rrr1 01dd dDDD: AND.W   Dr,d[!Areg,Dreg]
+1100 rrr1 10dd dDDD: EXG.L   Dr,d[Areg]      
+1100 rrr1 10dd dDDD: AND.L   Dr,d[!Areg,Dreg]
+1100 rrr1 11ss sSSS: MULS.W  s[!Areg],Dr
+
+1101 rrr0 zzss sSSS: ADD.z   s,Dr
+1101 rrr0 11ss sSSS: ADDA.W  s,Ar
+1101 rrr1 zzdd dDDD: ADDX.z  d[Dreg],Dr      
+1101 rrr1 zzdd dDDD: ADDX.z  d[Areg-Apdi],Arp      
+1101 rrr1 zzdd dDDD: ADD.z   Dr,d[!Areg,Dreg]
+1101 rrr1 11ss sSSS: ADDA.L  s,Ar
+
+1110 jjjf zz00 0RRR: ASf.z   #j,DR
+1110 jjjf zz00 1RRR: LSf.z   #j,DR
+1110 jjjf zz01 0RRR: ROXf.z  #j,DR
+1110 jjjf zz01 1RRR: ROf.z   #j,DR
+1110 rrrf zz10 0RRR: ASf.z   Dr,DR
+1110 rrrf zz10 1RRR: LSf.z   Dr,DR
+1110 rrrf zz11 0RRR: ROXf.z  Dr,DR
+1110 rrrf zz11 1RRR: ROf.z   Dr,DR
+1110 000f 11dd dDDD: ASfW.W  d[!Dreg,Areg,PC8r,PC16]
+1110 001f 11dd dDDD: LSfW.W  d[!Dreg,Areg,PC8r,PC16]
+1110 010f 11dd dDDD: ROXfW.W d[!Dreg,Areg,PC8r,PC16]
+1110 011f 11dd dDDD: ROfW.W  d[!Dreg,Areg,PC8r,PC16]
